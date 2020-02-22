@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="DailyStock.cs" />
     <Compile Include="ExcelSource.cs" />
+    <Compile Include="InvestmentSimulator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

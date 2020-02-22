@@ -23,10 +23,10 @@ namespace ZaraCode
                 var totalRows = selectSheet.Dimension.End.Row;
                 var totalColumns = selectSheet.Dimension.End.Column;
 
-                for (int rowNum = 2; rowNum <= totalRows; rowNum++) 
+                while (totalRows >= 2) 
                 {
                     DailyStock dailyStock = new DailyStock();
-                    var row = selectSheet.Cells[rowNum, 1, rowNum, totalColumns].Select(c => c.Value == null ? string.Empty : c.Value.ToString());
+                    var row = selectSheet.Cells[totalRows, 1, totalRows, totalColumns].Select(c => c.Value == null ? string.Empty : c.Value.ToString());
                     var line = row.ElementAt(0);
                     data = line.Split(';');
 
@@ -37,19 +37,19 @@ namespace ZaraCode
                         if (i == 0)
                         {
                             DateTime dTime = DateTime.Parse(a, myCultureInfo);
-                            dailyStock.dateTime = dTime;
+                            dailyStock.DateTime = dTime;
                         }
                         else if (i == 1)
                         {
-                            dailyStock.OpenDay = Decimal.Parse(a, CultureInfo.InvariantCulture);
+                            dailyStock.OpenDay = float.Parse(a, CultureInfo.InvariantCulture);
                         }
                         else
                         {
-                            dailyStock.CloseDay = Decimal.Parse(a, CultureInfo.InvariantCulture);
+                            dailyStock.CloseDay = float.Parse(a, CultureInfo.InvariantCulture);
                         }
                     }
                     dailyList.Add(dailyStock);
-                                
+                    totalRows--;
                 }   
             }
             return dailyList;

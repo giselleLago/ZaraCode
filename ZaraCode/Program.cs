@@ -10,8 +10,9 @@ namespace ZaraCode
     {
         static void Main(string[] args)
         {
-            ExcelSource dataInfo = new ExcelSource();
-            dataInfo.ExtractData();
+            InvestmentSimulator dataInfo = new InvestmentSimulator();
+            dataInfo.GetFinalCapital();
+            
             
             Console.ReadKey();
         }
