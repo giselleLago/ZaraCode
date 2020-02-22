@@ -10,8 +10,9 @@ namespace ZaraCode
     {
         static void Main(string[] args)
         {
-            DataInfo dataInfo = new DataInfo();
+            ExcelSource dataInfo = new ExcelSource();
             dataInfo.ExtractData();
+            
             Console.ReadKey();
         }
     }
