@@ -8,17 +8,8 @@ namespace ZaraCode
 {
     public class InvestmentSimulator
     {
-        //last thursday every month
-        //invierte el siguiente dia que se cotiza 50 - 2%(broker) al precio de apertura
-        //Calcular cual será el capital final obtenido, si realiza la venta total de sus
-        //acciones el día 28-dic-2017 al valor del cierre de la cotización.
-        // el primer dia no hay fluctuationAfterMarket
-        //el for comienza despues del primer cobro, no donde comienza la lista.
-        
-        public float GetFinalCapital()
+        public float GetFinalCapital(List<DailyStock> dataList)
         {
-            ExcelSource dataInfo = new ExcelSource();
-            var dataList = dataInfo.ExtractData().ToList();
             var monthlyInvestment = 50 - 50 * 0.02f;
             var currentCapital = 0.0f;
             var totalInvestment = 0.0f;
@@ -28,7 +19,6 @@ namespace ZaraCode
             for (int i = 0; i < dataList.Count; i++)
             {
                 var dailyStock = dataList[i];
-                
                 var dailyFluctuation = (float)Math.Round((dailyStock.CloseDay - dailyStock.OpenDay) / 100, 3);
                 var dTime = dailyStock.DateTime;
                 var firstDayOfNextMonth = new DateTime(dTime.Year, dTime.Month, 1).AddMonths(1);

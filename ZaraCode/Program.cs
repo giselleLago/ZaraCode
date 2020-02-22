@@ -11,7 +11,9 @@ namespace ZaraCode
         static void Main(string[] args)
         {
             InvestmentSimulator dataInfo = new InvestmentSimulator();
-            dataInfo.GetFinalCapital();
+            ExcelSource excelSource = new ExcelSource();
+            var list = excelSource.ExtractData().ToList();
+            dataInfo.GetFinalCapital(list);
             
             
             Console.ReadKey();
