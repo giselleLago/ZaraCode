@@ -9,7 +9,7 @@ namespace ZaraCodeTest
     public class UnitTest1
     {
         [TestMethod]
-        public void GetFinalCapital_test()
+        public void GetFinalCapital_test1()
         {
             var listDailyStock = new List<DailyStock>();
 
@@ -21,11 +21,26 @@ namespace ZaraCodeTest
 
             InvestmentSimulator investmentSimulator = new InvestmentSimulator();
             var result = investmentSimulator.GetFinalCapital(listDailyStock);
-            var expected = 78.400f;
+            var expected = 78.433f;
             Assert.AreEqual(expected, result);
-
         }
 
-        
+        [TestMethod]
+        public void GetFinalCapital_test2()
+        {
+            var listDailyStock = new List<DailyStock>();
+
+            listDailyStock.Add(new DailyStock { DateTime = new DateTime(2001, 5, 24), OpenDay = 3, CloseDay = 2 });
+            listDailyStock.Add(new DailyStock { DateTime = new DateTime(2001, 5, 25), OpenDay = 2.5f, CloseDay = 4 });
+            listDailyStock.Add(new DailyStock { DateTime = new DateTime(2001, 5, 28), OpenDay = 3, CloseDay = 2 });
+            listDailyStock.Add(new DailyStock { DateTime = new DateTime(2001, 6, 28), OpenDay = 1, CloseDay = 7 });
+            listDailyStock.Add(new DailyStock { DateTime = new DateTime(2001, 6, 29), OpenDay = 2, CloseDay = 3 });
+            listDailyStock.Add(new DailyStock { DateTime = new DateTime(2001, 6, 30), OpenDay = 1, CloseDay = 3 });
+
+            InvestmentSimulator investmentSimulator = new InvestmentSimulator();
+            var result = investmentSimulator.GetFinalCapital(listDailyStock);
+            var expected = 132.258f;
+            Assert.AreEqual(expected, result);
+        }
     }
 }
