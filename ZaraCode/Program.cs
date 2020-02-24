@@ -7,11 +7,14 @@ namespace ZaraCode
     {
         static void Main(string[] args)
         {
-            InvestmentSimulator dataInfo = new InvestmentSimulator();
+            InvestmentSimulator indexSimulator = new InvestmentSimulator();
             ExcelSource excelSource = new ExcelSource();
+            ExcelGenerator excelGenerator = new ExcelGenerator();
             var list = excelSource.ExtractData().ToList();
-            var result = dataInfo.GetFinalCapital(list, 50);
-            Console.WriteLine("Result value: {0:N3}", result);
+            var resultFinalCapital = indexSimulator.GetFinalCapital(list, 50);
+            var incomeList = resultFinalCapital.Item2;
+            excelGenerator.ExportList(incomeList);
+            Console.WriteLine("Result value: {0:N3}", resultFinalCapital.Item1);
             
             Console.ReadKey();
         }

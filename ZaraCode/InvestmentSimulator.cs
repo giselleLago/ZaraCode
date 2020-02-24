@@ -17,20 +17,30 @@ namespace ZaraCode
             return lastThursday;
         }
 
-        public double GetFinalCapital(List<DailyStock> dataList, double monthlyInvestment)
+        public (double, List<Income>) GetFinalCapital(List<DailyStock> dataList, double monthlyInvestment)
         {
             var realInvestment = monthlyInvestment - monthlyInvestment * 0.02;
             var currentCapital = 0d;
             var cDay = 0d;
             var init = false;
             var month = 0;
+            var incomePerMonth = new List<Income>();
             var lastDailyStock = new DateTime();
             for (int i = 0; i < dataList.Count; i++)
             {
                 var dailyStock = dataList[i];
                 var dailyFluctuation = Math.Round((dailyStock.CloseDay - dailyStock.OpenDay) / dailyStock.OpenDay, 3); 
                 var lastThursday = GetLastThursday(dailyStock);
-                
+
+                if (dailyStock.DateTime.Month != lastDailyStock.Month && currentCapital != 0)
+                {
+                    incomePerMonth.Add(new Income 
+                    { 
+                        LastDayMonth = lastDailyStock, 
+                        TotalIncome = Math.Round(currentCapital, 3)
+                    });
+                    
+                }
 
                 if (dailyStock.DateTime > lastThursday && lastDailyStock <= lastThursday && month != dailyStock.DateTime.Month)
                 {
@@ -58,11 +68,19 @@ namespace ZaraCode
                     currentCapital += Math.Round(dailyFluctuation * currentCapital, 3);
                     cDay = dailyStock.CloseDay;
                 }
-
+                if (i == dataList.Count - 1)
+                {
+                    incomePerMonth.Add(new Income
+                    {
+                        LastDayMonth = dailyStock.DateTime,
+                        TotalIncome = Math.Round(currentCapital, 3)
+                    });
+                }
                 lastDailyStock = dailyStock.DateTime;
             }
             var finalCapital = Math.Round(currentCapital, 3);
-            return finalCapital;
+            var incomeList = incomePerMonth;
+            return (finalCapital, incomeList);
         }
     }
 }
