@@ -1,2 +1,2 @@
 # Zara Tech Code
-Result value: **35333.25**
+Result value: **32994.432**

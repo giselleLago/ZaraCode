@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ZaraCode
 {
@@ -13,8 +10,8 @@ namespace ZaraCode
             InvestmentSimulator dataInfo = new InvestmentSimulator();
             ExcelSource excelSource = new ExcelSource();
             var list = excelSource.ExtractData().ToList();
-            dataInfo.GetFinalCapital(list, 50);
-            
+            var result = dataInfo.GetFinalCapital(list, 50);
+            Console.WriteLine("Result value: {0:N3}", result);
             
             Console.ReadKey();
         }

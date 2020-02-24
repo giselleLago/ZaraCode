@@ -9,8 +9,8 @@ namespace ZaraCode
     public class DailyStock 
     {
         public DateTime DateTime { get; set; }
-        public float OpenDay { get; set; }
-        public float CloseDay { get; set; }
+        public double OpenDay { get; set; }
+        public double CloseDay { get; set; }
 
     }
 }

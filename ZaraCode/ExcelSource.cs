@@ -41,11 +41,11 @@ namespace ZaraCode
                         }
                         else if (i == 1)
                         {
-                            dailyStock.OpenDay = float.Parse(a, CultureInfo.InvariantCulture);
+                            dailyStock.OpenDay = double.Parse(a, CultureInfo.InvariantCulture);
                         }
                         else
                         {
-                            dailyStock.CloseDay = float.Parse(a, CultureInfo.InvariantCulture);
+                            dailyStock.CloseDay = double.Parse(a, CultureInfo.InvariantCulture);
                         }
                     }
                     dailyList.Add(dailyStock);
