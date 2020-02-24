@@ -8,59 +8,58 @@ namespace ZaraCode
 {
     public class InvestmentSimulator
     {
-        public float GetFinalCapital(List<DailyStock> dataList)
+        public DateTime GetLastThursday(DailyStock daily)
         {
-            var monthlyInvestment = 50 - 50 * 0.02f;
-            var currentCapital = 0.0f;
-            var cDay = 0.0f;
-            var lastThursdayOfMonth = false;
+            var firstDayOfNextMonth = new DateTime(daily.DateTime.Year, daily.DateTime.Month, 1).AddMonths(1);
+            int vector = (((int)firstDayOfNextMonth.DayOfWeek + 1) % 7) + 2;
+            var lastThursday = firstDayOfNextMonth.AddDays(-vector);
+            
+            return lastThursday;
+        }
+
+        public float GetFinalCapital(List<DailyStock> dataList, float monthlyInvestment)
+        {
+            var realInvestment = monthlyInvestment - monthlyInvestment * 0.02f;
+            var currentCapital = 0f;
+            var cDay = 0f;
             var init = false;
+            var month = 0;
+            var lastDailyStock = new DateTime();
             for (int i = 0; i < dataList.Count; i++)
             {
                 var dailyStock = dataList[i];
-                var dailyFluctuation = (float)Math.Round((dailyStock.CloseDay - dailyStock.OpenDay) / dailyStock.OpenDay, 3);
+                var dailyFluctuation = (float)Math.Round((dailyStock.CloseDay - dailyStock.OpenDay) / dailyStock.OpenDay, 3); 
+                var lastThursday = GetLastThursday(dailyStock);
                 
-                var dTime = dailyStock.DateTime;
-                var firstDayOfNextMonth = new DateTime(dTime.Year, dTime.Month, 1).AddMonths(1);
-                int vector = (((int)firstDayOfNextMonth.DayOfWeek + 1) % 7) + 2;
-                var r = firstDayOfNextMonth.AddDays(-vector);
-                if (init == true || dTime == r )
+
+                if (dailyStock.DateTime > lastThursday && lastDailyStock <= lastThursday && month != dailyStock.DateTime.Month)
                 {
-                    if (lastThursdayOfMonth)
+                    if (currentCapital == 0)
                     {
-                        if (cDay != 0)
-                        {
-                            var fluctuationAfterMarket = (float)Math.Round((dailyStock.OpenDay - cDay) / cDay, 3);
-                            currentCapital += (float)Math.Round(fluctuationAfterMarket * currentCapital + monthlyInvestment, 3);
-                            currentCapital += (float)Math.Round(dailyFluctuation * currentCapital, 3);
-                            lastThursdayOfMonth = false;
-                            cDay = dailyStock.CloseDay;
-                        }
-                        else
-                        {
-                            if (currentCapital == 0)
-                            {
-                                currentCapital = monthlyInvestment;
-                                currentCapital += (float)Math.Round(dailyFluctuation * currentCapital, 3);
-                                lastThursdayOfMonth = false;
-                                cDay = dailyStock.CloseDay;
-                            }
-                        } 
+                        currentCapital = realInvestment;
+                        currentCapital += (float)Math.Round(dailyFluctuation * currentCapital, 3);
+                        cDay = dailyStock.CloseDay;
+                        month = dailyStock.DateTime.Month;
+                        init = true;
                     }
-                    else if(init)
+                    else
                     {
                         var fluctuationAfterMarket = (float)Math.Round((dailyStock.OpenDay - cDay) / cDay, 3);
-                        currentCapital += (float)Math.Round(fluctuationAfterMarket * currentCapital, 3);
+                        currentCapital += (float)Math.Round(fluctuationAfterMarket * currentCapital + realInvestment, 3);
                         currentCapital += (float)Math.Round(dailyFluctuation * currentCapital, 3);
-                        cDay = dailyStock.CloseDay; 
+                        cDay = dailyStock.CloseDay;
                     }
-
-                    if (dTime == r)
-                    {
-                        lastThursdayOfMonth = true;
-                    }
-                    init = true;
+                    
                 }
+                else if (init)
+                {
+                    var fluctuationAfterMarket = (float)Math.Round((dailyStock.OpenDay - cDay) / cDay, 3);
+                    currentCapital += (float)Math.Round(fluctuationAfterMarket * currentCapital, 3);
+                    currentCapital += (float)Math.Round(dailyFluctuation * currentCapital, 3);
+                    cDay = dailyStock.CloseDay;
+                }
+
+                lastDailyStock = dailyStock.DateTime;
             }
             var finalCapital = (float)Math.Round(currentCapital, 3);
             return finalCapital;
