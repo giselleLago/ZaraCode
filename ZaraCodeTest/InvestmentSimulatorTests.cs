@@ -75,7 +75,7 @@ namespace ZaraCodeTest
             var list = new List<Income>();
             {
                 new Income { LastDayMonth = new DateTime(2001, 5, 27), TotalIncome = 39.22};
-                new Income { LastDayMonth = new DateTime(2001, 6, 30), TotalIncome = 13};
+                new Income { LastDayMonth = new DateTime(2001, 6, 30), TotalIncome = 132.258};
             };
             Assert.AreEqual(expected, result.Item1);
             CollectionAssert.Equals(list, result);
