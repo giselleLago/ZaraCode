@@ -20,7 +20,7 @@ namespace ZaraCode
 
         private string GetKey(DateTime date) => $"{date.Month} - {date.Year}";
 
-        public IEnumerable<Stocks> GetFinalCapital(List<DailyStock> dataList)
+        public InvestmetResult GetFinalCapital(List<DailyStock> dataList)
         {
             var totalStock = 0m;
             var finalCapital = 0m;
@@ -51,8 +51,13 @@ namespace ZaraCode
                 }
 
             }
-            Console.WriteLine($"Final Capital: {finalCapital}");
-            return listStocks;
+            var result = new InvestmetResult
+            {
+                StockList = listStocks,
+                FinalCapital = finalCapital
+            };
+
+            return result;
         }
     }
 }

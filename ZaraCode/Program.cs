@@ -16,8 +16,9 @@ namespace ZaraCode
             ExcelGenerator excelGenerator = new ExcelGenerator();
             var list = excelSource.ExtractData().ToList();
             var incomeList = indexSimulator.GetFinalCapital(list);
+            Console.WriteLine($"Final Capital: {incomeList.FinalCapital}");
             Console.WriteLine("Exporting data to Excel...");
-            excelGenerator.ExportList(incomeList);
+            excelGenerator.ExportList(incomeList.StockList);
             sw.Stop();
             Console.WriteLine("Time elapsed: {0}", sw.Elapsed.ToString("hh\\:mm\\:ss\\.fff"));
 

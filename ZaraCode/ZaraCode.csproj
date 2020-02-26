@@ -64,6 +64,7 @@
     <Compile Include="DailyStock.cs" />
     <Compile Include="ExcelSource.cs" />
     <Compile Include="ExcelGenerator.cs" />
+    <Compile Include="InvestmetResult.cs" />
     <Compile Include="Stocks.cs" />
     <Compile Include="InvestmentSimulator.cs" />
     <Compile Include="Program.cs" />
