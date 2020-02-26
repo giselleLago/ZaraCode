@@ -11,7 +11,6 @@ namespace ZaraCode
     {
         public IEnumerable<DailyStock> ExtractData()
         {
-            var dataList = new List<string[]>();
             var dailyList = new List<DailyStock>();
             string[] data;
            
@@ -39,11 +38,11 @@ namespace ZaraCode
                         }
                         else if (i == 1)
                         {
-                            dailyStock.OpenDay = decimal.Parse(a, CultureInfo.InvariantCulture);
+                            dailyStock.CloseDay = decimal.Parse(a, CultureInfo.InvariantCulture);
                         }
                         else
                         {
-                            dailyStock.CloseDay = decimal.Parse(a, CultureInfo.InvariantCulture);
+                            dailyStock.OpenDay = decimal.Parse(a, CultureInfo.InvariantCulture);
                         }
                     }
                     dailyList.Add(dailyStock);

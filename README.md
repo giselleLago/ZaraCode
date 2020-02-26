@@ -1,5 +1,5 @@
 # Zara Tech Code
-Result value: **32994.432**
+Result value: **36585.568**
 Para resolver el reto ZaraTechCode primeramente creé la clase DailyStock, la cual se encarga de modelar las propiedades
 DateTime(fecha), OpenDay(apertura) y CloseDay(cierre) de cada dia que la empresa Inditex cotiza en bolsa. Luego añadí 
 otra clase (ExcelSource) que es la encargada de extraer los datos de el archivo excel y devolver una lista de tipo DailyStock
