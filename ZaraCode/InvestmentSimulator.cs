@@ -5,79 +5,50 @@ namespace ZaraCode
 {
     public class InvestmentSimulator
     {
+        public const int Invvestment = 50;
+        public const int Broker = Invvestment * 2 / 100;
+        public const int RealInvestment = Invvestment - Broker;
         public DateTime GetLastThursday(DailyStock daily)
         {
-            var firstDayOfNextMonth = new DateTime(daily.DateTime.Year, daily.DateTime.Month, 1).AddMonths(1);
-            int vector = (((int)firstDayOfNextMonth.DayOfWeek + 1) % 7) + 2;
-            var lastThursday = firstDayOfNextMonth.AddDays(-vector);
-            
-            return lastThursday;
+            var lastDayOfMonth = new DateTime(daily.DateTime.Year, daily.DateTime.Month, DateTime.DaysInMonth(daily.DateTime.Year, daily.DateTime.Month));
+
+            while (lastDayOfMonth.DayOfWeek != DayOfWeek.Thursday)
+                lastDayOfMonth = lastDayOfMonth.AddDays(-1);
+
+            return lastDayOfMonth;
         }
 
-        public (double, List<Income>) GetFinalCapital(List<DailyStock> dataList, double monthlyInvestment)
+        private string GetKey(DateTime date) => $"{date.Month} - {date.Year}";
+
+        public decimal GetFinalCapital(List<DailyStock> dataList, double monthlyInvestment)
         {
-            var realInvestment = monthlyInvestment - monthlyInvestment * 0.02;
-            var currentCapital = 0d;
-            var cDay = 0d;
-            var init = false;
-            var month = 0;
-            var incomePerMonth = new List<Income>();
-            var lastDailyStock = new DateTime();
-            for (int i = 0; i < dataList.Count; i++)
+            var totalStock = 0m;
+            var finalCapital = 0m;
+            var dictionary = new Dictionary<string, bool>();
+
+            for (int i = 1; i < dataList.Count; i++)
             {
-                var dailyStock = dataList[i];
-                var dailyFluctuation = Math.Round((dailyStock.CloseDay - dailyStock.OpenDay) / dailyStock.OpenDay, 3); 
-                var lastThursday = GetLastThursday(dailyStock);
+                var previous = dataList[i - 1];
+                var current = dataList[i];
+                var lastThursday = GetLastThursday(previous);
+                var key = GetKey(previous.DateTime);
 
-                if (dailyStock.DateTime.Month != lastDailyStock.Month && currentCapital != 0)
+                if ((previous.DateTime >= lastThursday || current.DateTime > lastThursday) && !dictionary.ContainsKey(key))
                 {
-                    incomePerMonth.Add(new Income 
-                    { 
-                        LastDayMonth = lastDailyStock, 
-                        TotalIncome = Math.Round(currentCapital, 3)
-                    });
-                    
+                    Console.WriteLine($"Investing on {current.DateTime}");
+                    totalStock = Math.Round(totalStock + RealInvestment / current.OpenDay, 3);
+                    dictionary.Add(key, true);
                 }
 
-                if (dailyStock.DateTime > lastThursday && lastDailyStock <= lastThursday && month != dailyStock.DateTime.Month)
-                {
-                    if (currentCapital == 0)
-                    {
-                        currentCapital = realInvestment;
-                        currentCapital += Math.Round(dailyFluctuation * currentCapital, 3);
-                        cDay = dailyStock.CloseDay;
-                        month = dailyStock.DateTime.Month;
-                        init = true;
-                    }
-                    else
-                    {
-                        var fluctuationAfterMarket = Math.Round((dailyStock.OpenDay - cDay) / cDay, 3);
-                        currentCapital += Math.Round(fluctuationAfterMarket * currentCapital + realInvestment, 3);
-                        currentCapital += Math.Round(dailyFluctuation * currentCapital, 3);
-                        cDay = dailyStock.CloseDay;
-                    }
-                    
-                }
-                else if (init)
-                {
-                    var fluctuationAfterMarket = Math.Round((dailyStock.OpenDay - cDay) / cDay, 3);
-                    currentCapital += Math.Round(fluctuationAfterMarket * currentCapital, 3);
-                    currentCapital += Math.Round(dailyFluctuation * currentCapital, 3);
-                    cDay = dailyStock.CloseDay;
-                }
                 if (i == dataList.Count - 1)
                 {
-                    incomePerMonth.Add(new Income
-                    {
-                        LastDayMonth = dailyStock.DateTime,
-                        TotalIncome = Math.Round(currentCapital, 3)
-                    });
+                    finalCapital = Math.Round(totalStock * current.CloseDay, 3);
                 }
-                lastDailyStock = dailyStock.DateTime;
+
             }
-            var finalCapital = Math.Round(currentCapital, 3);
-            var incomeList = incomePerMonth;
-            return (finalCapital, incomeList);
+
+            return finalCapital;
         }
     }
 }
+
