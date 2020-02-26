@@ -2,10 +2,10 @@
 
 namespace ZaraCode
 {
-    public class Income 
+    public class Stocks 
     {
         public DateTime LastDayMonth { get; set; }
-        public double TotalIncome { get; set; }
+        public decimal TotalStocks { get; set; }
 
     }
 }

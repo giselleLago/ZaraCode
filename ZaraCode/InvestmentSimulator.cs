@@ -20,11 +20,12 @@ namespace ZaraCode
 
         private string GetKey(DateTime date) => $"{date.Month} - {date.Year}";
 
-        public decimal GetFinalCapital(List<DailyStock> dataList, double monthlyInvestment)
+        public IEnumerable<Stocks> GetFinalCapital(List<DailyStock> dataList)
         {
             var totalStock = 0m;
             var finalCapital = 0m;
             var dictionary = new Dictionary<string, bool>();
+            var listStocks = new List<Stocks>();
 
             for (int i = 1; i < dataList.Count; i++)
             {
@@ -35,9 +36,13 @@ namespace ZaraCode
 
                 if ((previous.DateTime >= lastThursday || current.DateTime > lastThursday) && !dictionary.ContainsKey(key))
                 {
-                    Console.WriteLine($"Investing on {current.DateTime}");
                     totalStock = Math.Round(totalStock + RealInvestment / current.OpenDay, 3);
                     dictionary.Add(key, true);
+                    listStocks.Add(new Stocks
+                    {
+                        LastDayMonth = current.DateTime,
+                        TotalStocks = totalStock
+                    });
                 }
 
                 if (i == dataList.Count - 1)
@@ -46,8 +51,8 @@ namespace ZaraCode
                 }
 
             }
-
-            return finalCapital;
+            Console.WriteLine($"Final Capital: {finalCapital}");
+            return listStocks;
         }
     }
 }

@@ -7,7 +7,7 @@ namespace ZaraCode
     public class ExcelGenerator
     {
 
-        public void ExportList(List<Income> income)
+        public void ExportList(IEnumerable<Stocks> income)
         {
             using (ExcelEngine excelEngine = new ExcelEngine())
             {
@@ -16,7 +16,7 @@ namespace ZaraCode
                 IWorkbook workbook = application.Workbooks.Create(1);
                 IWorksheet worksheet = workbook.Worksheets[0];
  
-                List<Income> incomes = income;
+                IEnumerable<Stocks> incomes = income;
                 worksheet.ImportData(incomes, 2, 1, false);
 
                 worksheet["A1"].Text = "Date";
@@ -25,7 +25,6 @@ namespace ZaraCode
                 worksheet.UsedRange.AutofitColumns();
                 Stream excelStream = File.Create(Path.GetFullPath(@"ZaraCode.xlsx"));
                 workbook.SaveAs(excelStream);
-                excelStream.Dispose();
             }
         }
         
