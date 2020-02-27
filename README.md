@@ -20,7 +20,5 @@ type **Stocks**).<br />
 **Stocks** Create a model class with 3 properties(investment day, total stocks).<br />
 **ExcelExporter** Create a class to export data(date, total stocks per month, final capital, total gain,
 y total investment) to a csv file.<br />
-
-I also create Interfaces Classes to aply Interface Segregation(I).<br />
 ## Technology Stack
 C# - .Net Framework - SonarLint - Git
