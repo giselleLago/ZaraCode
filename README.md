@@ -1,10 +1,26 @@
 # Zara Tech Code
-Result value: **36585.568**
-Para resolver el reto ZaraTechCode primeramente creé la clase DailyStock, la cual se encarga de modelar las propiedades
-DateTime(fecha), OpenDay(apertura) y CloseDay(cierre) de cada dia que la empresa Inditex cotiza en bolsa. Luego añadí 
-otra clase (ExcelSource) que es la encargada de extraer los datos de el archivo excel y devolver una lista de tipo DailyStock
-la cual utilizo en la clase(InvestmentSimulator) donde hago el cálculo que devuelve el capital final obtindo y una lista de 
-la ganancia que va obteniendo al final de cada mes desde el comienzo de la inversión hasta el dia de la venta de sus acciones.
-Para tramitar los datos de la lista que luego voy a exportar a un archivo excel, creé la clase Income donde modelo las 
-propiedades y la clase ExcelGenerator de tipo Income es la que se encarga de exportar la lista al excel. Adicionalmente 
-está el Unit Test con 3 métodos de prueba para el método GetFinalCapital de la clase InvestmentSimulator. 
+##Result value: 
+**36585.568**
+
+Zara Tech Code is my first activity from Vueling University. I'am proud of myself, because i have worked with effort 
+and motivation to improve my professional skills.
+
+## Responsabilities
+To solved Zara Challenge first i separate the problem in tascks, always respecting SOLID principles, where each class and 
+each method will have a single responsibility, also Interface Segregation and trying to comply with the rule of 10x10x10.
+
+## Implementation
+**ExcelSource** Create a class to exctract data from a csv file.
+       - Return an object list type **DailyStock**.
+**DailyStock** Create a model class with 3 properties(Date, opening price, closing price).
+**InvestmentSimulator** Create a class to do Math calculation.
+	   - Return an object type **InvestmetResult**.
+**InvestmetResult** Create a model class with 4 properties(final capital, total investment, total gain, objects list
+type **Stocks**).
+**Stocks** Create a model class with 3 properties(investment day, total stocks).
+**ExcelExporter** Create a class to export data(date, total stocks per month, final capital, total gain,
+y total investment) to a csv file.
+
+I also create Interfaces Classes to aply Interface Segregation(I).
+## Technology Stack
+C# - .Net Framework - SonarLint - Git
