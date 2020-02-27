@@ -7,7 +7,7 @@ namespace ZaraCode.Services
 {
     public class ExcelExporter : IExporter
     {
-        public void Export(IEnumerable<Stocks> stocks, string fileName)
+        public void Export(InvestmetResult result, string fileName)
         {
             using (var excelEngine = new ExcelEngine())
             {
@@ -15,15 +15,27 @@ namespace ZaraCode.Services
                 application.DefaultVersion = ExcelVersion.Excel2013;
                 var workbook = application.Workbooks.Create(1);
                 var worksheet = workbook.Worksheets[0];
-                
-                worksheet.ImportData(stocks, 2, 1, false);
+                var resultList = new List<object>
+                {
+                    new { value = result.TotalInvestment },
+                    new { value = result.TotalGain },
+                    new { value = result.FinalCapital }
+                };
+
+                worksheet.ImportData(result.StockList, 2, 1, false);
+                worksheet.ImportData(resultList, 1, 5, false);
 
                 worksheet["A1"].Text = "Date";
-                worksheet["B1"].Text = "Income";
+                worksheet["B1"].Text = "Stocks";
+                worksheet["D1"].Text = "Total Investment";
+                worksheet["D2"].Text = "Total Gain";
+                worksheet["D3"].Text = "Final Capital";
 
                 worksheet.UsedRange.AutofitColumns();
-                var excelStream = File.Create(Path.GetFullPath(fileName));
-                workbook.SaveAs(excelStream);
+                using (var excelStream = File.Create(Path.GetFullPath(fileName)))
+                {
+                    workbook.SaveAs(excelStream);
+                } 
             }
         }
     }

@@ -21,7 +21,7 @@ namespace ZaraCode
             Console.WriteLine($"Total Investment: {incomeList.TotalInvestment}");
             Console.WriteLine($"Total Gain: {incomeList.TotalGain}");
             Console.WriteLine("Exporting data to Excel...");
-            exporter.Export(incomeList.StockList, @"ZaraCode.xlsx");
+            exporter.Export(incomeList, @"ZaraCode.xlsx");
             sw.Stop();
             Console.WriteLine("Time elapsed: {0}", sw.Elapsed.ToString("hh\\:mm\\:ss\\.fff"));
             Console.ReadKey();
