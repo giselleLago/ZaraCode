@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using ZaraCode.Models;
 
-namespace ZaraCode
+namespace ZaraCode.Services
 {
     public class InvestmentSimulator
     {
         public const int Invvestment = 50;
         public const int Broker = Invvestment * 2 / 100;
         public const int RealInvestment = Invvestment - Broker;
-        public DateTime GetLastThursday(DailyStock daily)
+        private DateTime GetLastThursday(DailyStock daily)
         {
             var lastDayOfMonth = new DateTime(daily.DateTime.Year, daily.DateTime.Month, DateTime.DaysInMonth(daily.DateTime.Year, daily.DateTime.Month));
 
@@ -24,6 +25,8 @@ namespace ZaraCode
         {
             var totalStock = 0m;
             var finalCapital = 0m;
+            var totalGain = 0m;
+            var totalInvestment = 0m;
             var dictionary = new Dictionary<string, bool>();
             var listStocks = new List<Stocks>();
 
@@ -38,6 +41,7 @@ namespace ZaraCode
                 {
                     totalStock = Math.Round(totalStock + RealInvestment / current.OpenDay, 3);
                     dictionary.Add(key, true);
+                    totalInvestment += RealInvestment;
                     listStocks.Add(new Stocks
                     {
                         LastDayMonth = current.DateTime,
@@ -49,12 +53,15 @@ namespace ZaraCode
                 {
                     finalCapital = Math.Round(totalStock * current.CloseDay, 3);
                 }
-
+                
             }
+            totalGain = finalCapital - totalInvestment;
             var result = new InvestmetResult
             {
                 StockList = listStocks,
-                FinalCapital = finalCapital
+                FinalCapital = finalCapital,
+                TotalInvestment = totalInvestment,
+                TotalGain = totalGain
             };
 
             return result;

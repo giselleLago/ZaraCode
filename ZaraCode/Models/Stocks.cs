@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ZaraCode
+namespace ZaraCode.Models
 {
     public class Stocks 
     {

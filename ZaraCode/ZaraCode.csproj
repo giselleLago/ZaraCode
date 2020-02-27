@@ -61,12 +61,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DailyStock.cs" />
-    <Compile Include="ExcelSource.cs" />
-    <Compile Include="ExcelGenerator.cs" />
-    <Compile Include="InvestmetResult.cs" />
-    <Compile Include="Stocks.cs" />
-    <Compile Include="InvestmentSimulator.cs" />
+    <Compile Include="Models\DailyStock.cs" />
+    <Compile Include="Services\ExcelSource.cs" />
+    <Compile Include="Services\ExcelGenerator.cs" />
+    <Compile Include="Models\InvestmetResult.cs" />
+    <Compile Include="Models\Stocks.cs" />
+    <Compile Include="Services\InvestmentSimulator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Linq;
+using ZaraCode.Services;
 
 namespace ZaraCode
 {
@@ -17,6 +18,8 @@ namespace ZaraCode
             var list = excelSource.ExtractData().ToList();
             var incomeList = indexSimulator.GetFinalCapital(list);
             Console.WriteLine($"Final Capital: {incomeList.FinalCapital}");
+            Console.WriteLine($"Total Investment: {incomeList.TotalInvestment}");
+            Console.WriteLine($"Total Gain: {incomeList.TotalGain}");
             Console.WriteLine("Exporting data to Excel...");
             excelGenerator.ExportList(incomeList.StockList);
             sw.Stop();

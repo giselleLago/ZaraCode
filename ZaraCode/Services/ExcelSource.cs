@@ -4,8 +4,9 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using ZaraCode.Models;
 
-namespace ZaraCode
+namespace ZaraCode.Services
 {
     public class ExcelSource
     {

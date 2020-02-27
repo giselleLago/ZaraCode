@@ -1,8 +1,9 @@
 ﻿using Syncfusion.XlsIO;
 using System.Collections.Generic;
 using System.IO;
+using ZaraCode.Models;
 
-namespace ZaraCode
+namespace ZaraCode.Services
 {
     public class ExcelGenerator
     {
@@ -27,6 +28,5 @@ namespace ZaraCode
                 workbook.SaveAs(excelStream);
             }
         }
-        
     }
 }

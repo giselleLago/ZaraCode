@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ZaraCode;
+using ZaraCode.Models;
+using ZaraCode.Services;
 
-namespace ZaraCodeTest
+namespace ZaraCodeTest.Services
 {
     [TestClass]
     public class InvestmentSimulatorTests
@@ -64,19 +65,6 @@ namespace ZaraCodeTest
             var result = investmentSimulator.GetFinalCapital(listDailyStock);
             var expected = 220.5m;
             Assert.AreEqual(expected, result);
-        }
-        [TestMethod]
-        public void GetLastThursday_GivenADate()
-        {
-            var dailyStock = new DailyStock();
-            dailyStock.DateTime = new DateTime(2001, 6, 27);
-
-            InvestmentSimulator investmentSimulator = new InvestmentSimulator();
-            var result = investmentSimulator.GetLastThursday(dailyStock);
-            var expected = new DateTime(2001, 6, 28);
-
-            Assert.AreEqual(expected, result);
-
         }
     }
 }
