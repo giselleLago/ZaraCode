@@ -7,7 +7,7 @@ and motivation to improve my professional skills.
 
 ## Responsabilities
 To solved Zara Challenge first i separate the problem in tascks, always respecting SOLID principles, where each class and 
-each method will have a single responsibility, also Interface Segregation and trying to comply with the rule of 10x10x10.
+each method will have a single responsibility, i also use Interface Segregation and trying to comply with the rule of 10x10x10.
 
 ## Class and Implementation 
 **ExcelSource** Create a class to exctract data from a csv file.<br />
