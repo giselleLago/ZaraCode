@@ -15,7 +15,7 @@ namespace ZaraCode.Services
             var dailyList = new List<DailyStock>();
             string[] data;
            
-            using (ExcelPackage excelPackage = new ExcelPackage(new FileInfo(@"C:\Users\holacons\source\repos\ZaraCode\stocks-ITX.xlsx")))
+            using (ExcelPackage excelPackage = new ExcelPackage(new FileInfo(@"Data\stocks-ITX.xlsx")))
             {
                 var selectSheet = excelPackage.Workbook.Worksheets.First();
                 var totalRows = selectSheet.Dimension.End.Row;
