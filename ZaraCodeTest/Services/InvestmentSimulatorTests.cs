@@ -22,7 +22,7 @@ namespace ZaraCodeTest.Services
             };
 
             InvestmentSimulator investmentSimulator = new InvestmentSimulator();
-            var result = investmentSimulator.GetFinalCapital(listDailyStock);
+            var result = investmentSimulator.Calculate(listDailyStock);
             var expected = 0m;
       
             Assert.AreEqual(expected, result);
@@ -42,7 +42,7 @@ namespace ZaraCodeTest.Services
             };
 
             InvestmentSimulator investmentSimulator = new InvestmentSimulator();
-            var result = investmentSimulator.GetFinalCapital(listDailyStock);
+            var result = investmentSimulator.Calculate(listDailyStock);
             var expected = 220.5m;
             
             Assert.AreEqual(expected, result);
@@ -62,7 +62,7 @@ namespace ZaraCodeTest.Services
             };
 
             InvestmentSimulator investmentSimulator = new InvestmentSimulator();
-            var result = investmentSimulator.GetFinalCapital(listDailyStock);
+            var result = investmentSimulator.Calculate(listDailyStock);
             var expected = 220.5m;
             Assert.AreEqual(expected, result);
         }

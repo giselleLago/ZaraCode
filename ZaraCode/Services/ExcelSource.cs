@@ -8,9 +8,9 @@ using ZaraCode.Models;
 
 namespace ZaraCode.Services
 {
-    public class ExcelSource
+    public class ExcelSource : IDataSource
     {
-        public IEnumerable<DailyStock> ExtractData()
+        public IList<DailyStock> ExtractData()
         {
             var dailyList = new List<DailyStock>();
             string[] data;
@@ -51,9 +51,7 @@ namespace ZaraCode.Services
                 }   
             }
             return dailyList;
-        }
-
-        
+        }  
     }
 }
 

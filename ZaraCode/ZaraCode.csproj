@@ -63,9 +63,12 @@
   <ItemGroup>
     <Compile Include="Models\DailyStock.cs" />
     <Compile Include="Services\ExcelSource.cs" />
-    <Compile Include="Services\ExcelGenerator.cs" />
+    <Compile Include="Services\ExcelExporter.cs" />
     <Compile Include="Models\InvestmetResult.cs" />
     <Compile Include="Models\Stocks.cs" />
+    <Compile Include="Services\IDataSource.cs" />
+    <Compile Include="Services\IExporter.cs" />
+    <Compile Include="Services\IInvestmentSimulator.cs" />
     <Compile Include="Services\InvestmentSimulator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Linq;
 using ZaraCode.Services;
 
 namespace ZaraCode
@@ -9,23 +8,21 @@ namespace ZaraCode
     {
         static void Main(string[] args)
         {
-            Stopwatch sw = new Stopwatch();
+            var sw = new Stopwatch();
             sw.Start();
             Console.WriteLine("Running Zara Tech Code...");
-            InvestmentSimulator indexSimulator = new InvestmentSimulator();
-            ExcelSource excelSource = new ExcelSource();
-            ExcelGenerator excelGenerator = new ExcelGenerator();
-            var list = excelSource.ExtractData().ToList();
-            var incomeList = indexSimulator.GetFinalCapital(list);
+            IInvestmentSimulator indexSimulator = new InvestmentSimulator();
+            IDataSource dataSource = new ExcelSource();
+            IExporter exporter = new ExcelExporter();
+            var list = dataSource.ExtractData();
+            var incomeList = indexSimulator.Calculate(list);
             Console.WriteLine($"Final Capital: {incomeList.FinalCapital}");
             Console.WriteLine($"Total Investment: {incomeList.TotalInvestment}");
             Console.WriteLine($"Total Gain: {incomeList.TotalGain}");
             Console.WriteLine("Exporting data to Excel...");
-            excelGenerator.ExportList(incomeList.StockList);
+            exporter.Export(incomeList.StockList, @"ZaraCode.xlsx");
             sw.Stop();
             Console.WriteLine("Time elapsed: {0}", sw.Elapsed.ToString("hh\\:mm\\:ss\\.fff"));
-
-
             Console.ReadKey();
         }
     }

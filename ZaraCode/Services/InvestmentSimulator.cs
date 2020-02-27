@@ -4,7 +4,7 @@ using ZaraCode.Models;
 
 namespace ZaraCode.Services
 {
-    public class InvestmentSimulator
+    public class InvestmentSimulator : IInvestmentSimulator
     {
         public const int Invvestment = 50;
         public const int Broker = Invvestment * 2 / 100;
@@ -21,7 +21,7 @@ namespace ZaraCode.Services
 
         private string GetKey(DateTime date) => $"{date.Month} - {date.Year}";
 
-        public InvestmetResult GetFinalCapital(List<DailyStock> dataList)
+        public InvestmetResult Calculate(IList<DailyStock> dataList)
         {
             var totalStock = 0m;
             var finalCapital = 0m;
