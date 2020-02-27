@@ -6,26 +6,14 @@ namespace ZaraCode.Services
 {
     public class InvestmentSimulator : IInvestmentSimulator
     {
-        public const int Invvestment = 50;
-        public const int Broker = Invvestment * 2 / 100;
-        public const int RealInvestment = Invvestment - Broker;
-        private DateTime GetLastThursday(DailyStock daily)
-        {
-            var lastDayOfMonth = new DateTime(daily.DateTime.Year, daily.DateTime.Month, DateTime.DaysInMonth(daily.DateTime.Year, daily.DateTime.Month));
-
-            while (lastDayOfMonth.DayOfWeek != DayOfWeek.Thursday)
-                lastDayOfMonth = lastDayOfMonth.AddDays(-1);
-
-            return lastDayOfMonth;
-        }
-
-        private string GetKey(DateTime date) => $"{date.Month} - {date.Year}";
+        private const int Invvestment = 50;
+        private const int Broker = Invvestment * 2 / 100;
+        private const int RealInvestment = Invvestment - Broker;
 
         public InvestmetResult Calculate(IList<DailyStock> dataList)
         {
             var totalStock = 0m;
             var finalCapital = 0m;
-            var totalGain = 0m;
             var totalInvestment = 0m;
             var dictionary = new Dictionary<string, bool>();
             var listStocks = new List<Stocks>();
@@ -36,8 +24,9 @@ namespace ZaraCode.Services
                 var current = dataList[i];
                 var lastThursday = GetLastThursday(previous);
                 var key = GetKey(previous.DateTime);
+                var mustInvest = (previous.DateTime >= lastThursday || current.DateTime > lastThursday) && !dictionary.ContainsKey(key);
 
-                if ((previous.DateTime >= lastThursday || current.DateTime > lastThursday) && !dictionary.ContainsKey(key))
+                if (mustInvest)
                 {
                     totalStock = Math.Round(totalStock + RealInvestment / current.OpenDay, 3);
                     dictionary.Add(key, true);
@@ -53,19 +42,28 @@ namespace ZaraCode.Services
                 {
                     finalCapital = Math.Round(totalStock * current.CloseDay, 3);
                 }
-                
             }
-            totalGain = finalCapital - totalInvestment;
-            var result = new InvestmetResult
+
+            return new InvestmetResult
             {
                 StockList = listStocks,
                 FinalCapital = finalCapital,
                 TotalInvestment = totalInvestment,
-                TotalGain = totalGain
+                TotalGain = finalCapital - totalInvestment
             };
-
-            return result;
         }
+
+        private DateTime GetLastThursday(DailyStock daily)
+        {
+            var lastDayOfMonth = new DateTime(daily.DateTime.Year, daily.DateTime.Month, DateTime.DaysInMonth(daily.DateTime.Year, daily.DateTime.Month));
+
+            while (lastDayOfMonth.DayOfWeek != DayOfWeek.Thursday)
+                lastDayOfMonth = lastDayOfMonth.AddDays(-1);
+
+            return lastDayOfMonth;
+        }
+
+        private string GetKey(DateTime date) => $"{date.Month} - {date.Year}";
     }
 }
 

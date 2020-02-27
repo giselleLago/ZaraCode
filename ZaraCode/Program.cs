@@ -10,11 +10,12 @@ namespace ZaraCode
         {
             var sw = new Stopwatch();
             sw.Start();
-            Console.WriteLine("Running Zara Tech Code...");
+            Console.WriteLine("Reading data source...");
             IInvestmentSimulator indexSimulator = new InvestmentSimulator();
             IDataSource dataSource = new ExcelSource();
             IExporter exporter = new ExcelExporter();
             var list = dataSource.ExtractData();
+            Console.WriteLine("Calculating...");
             var incomeList = indexSimulator.Calculate(list);
             Console.WriteLine($"Final Capital: {incomeList.FinalCapital}");
             Console.WriteLine($"Total Investment: {incomeList.TotalInvestment}");
